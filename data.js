@@ -100,7 +100,7 @@ const EPISODES = [
   ] },
   { id: 4, artist: "After", date: "30 May 2026",
     soundcloud: "https://soundcloud.com/radio-arcadia/friends-ep4-after-30-05-2026",
-    notes: "",
+    notes: "Featuring the interview conducted with After following their 2026 show in Amsterdam!",
     tracks: [
     ["Outbound", "After", "Outbound"],
     ["The Field", "After", "After EP 2", "Oscar Scheller"],
@@ -157,7 +157,7 @@ const EPISODES = [
   ] },
   { id: 6, artist: "Waxahatchee", date: "11 Jul 2026",
     soundcloud: "https://soundcloud.com/radio-arcadia/friends-ep6-waxahatchee-11-07",
-    notes: "",
+    notes: "Indie-folk from down south",
     tracks: [
     ["Fire", "Waxahatchee", "Saint Cloud"],
     ["The Eye", "Waxahatchee", "Saint Cloud"],
@@ -247,7 +247,7 @@ const EPISODES = [
   ] },
   { id: 9, artist: "Arca", date: "",
     soundcloud: "",
-    notes: "",
+    notes: "A multi-instrumentalist and multi-talented visonary with collaborations from Bjork to Rosalia",
     tracks: [
     ["KLK", "Arca", "KiCk i", "ROSALÍA"],
     ["Machote", "Arca", "KiCk i"],
@@ -279,7 +279,7 @@ const EPISODES = [
   ] },
   { id: 10, artist: "Hayley Williams", date: "",
     soundcloud: "https://soundcloud.com/radio-arcadia/recording-friends-ep10",
-    notes: "",
+    notes: "Ms. Williams if ya nasty",
     tracks: [
     ["Ain’t It Fun", "Paramore", "Paramore"],
     ["Airplanes", "B.o.B", "The Adventures of Bobby Ray", "Hayley Williams"],
@@ -309,7 +309,7 @@ const EPISODES = [
     ["Parachute", "Hayley Williams", "Ego Death at a Bachelorette Party"]
   ] },
   { id: 11, artist: "Jim-E Stack", date: "",
-    soundcloud: "coming soon",
+    soundcloud: "",
     notes: "",
     tracks: [
     ["Door", "Caroline Polachek", "Pang", "Jim-E Stack; Danny L Harle; Daniel Nigro"],
