@@ -309,7 +309,7 @@ const EPISODES = [
     ["Parachute", "Hayley Williams", "Ego Death at a Bachelorette Party"]
   ] },
   { id: 11, artist: "Jim-E Stack", date: "",
-    soundcloud: "",
+    soundcloud: "coming soon",
     notes: "",
     tracks: [
     ["Door", "Caroline Polachek", "Pang", "Jim-E Stack; Danny L Harle; Daniel Nigro"],
