@@ -6,7 +6,7 @@ else{
 document.title=e.artist+" | &friends";
 const f=canon(e.artist), others=EPISODES.filter(x=>x.id!==e.id), url=x=>`episode.html?id=${x.id}`;
 const own=Object.fromEntries(EPISODES.map(x=>[canon(x.artist),x]));
-const embed=s=>!s?'<div class="embed">The player will appear here once you add this episode\'s SoundCloud link in data.js.</div>':s.trim().startsWith("<")?`<div class="embed live">${s}</div>`:`<div class="embed live"><iframe title="${e.artist} episode player" height="166" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(s)}&color=%23000000&show_teaser=false"></iframe></div>`;
+const embed=s=>!s?'<div class="embed">RECORDING COMING SOON</div>':s.trim().startsWith("<")?`<div class="embed live">${s}</div>`:`<div class="embed live"><iframe title="${e.artist} episode player" height="166" allow="autoplay" src="https://w.soundcloud.com/player/?url=${encodeURIComponent(s)}&color=%23000000&show_teaser=false"></iframe></div>`;
 const bridges=epPeople(e).map(p=>({p,eps:others.filter(x=>canon(x.artist)===p||epPeople(x).includes(p))})).filter(b=>b.eps.length).sort((a,b)=>b.eps.length-a.eps.length);
 const tr=t=>`<li><b>${t[0]}</b> <span class="by">${t[1]}${t[3]?" with "+t[3].replace(/;/g,","):""}</span>${t[2]?`<small>${t[2]}</small>`:""}${t[4]?`<em>${t[4]}</em>`:""}</li>`;
 main.innerHTML=`<p class="hint">Episode ${pad(e.id)}${e.date?" · "+e.date:""}</p><h1>${e.artist}</h1>${embed(e.soundcloud)}
