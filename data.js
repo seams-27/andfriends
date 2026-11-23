@@ -337,7 +337,7 @@ const EPISODES = [
     ["Pangea", "Dominic Fike", "How to Quit Smoking (2025)", "Jim-E Stack"],
     ["Note to Self", "Jim-E Stack", "EPHEMERA", "Empress Of"]
   ] },
-  { id: 12, artist: "Kaytranada", date: "",
+  { id: 12, artist: "KAYTRANADA", date: "",
     soundcloud: "",
     notes: "",
     tracks: [] }
