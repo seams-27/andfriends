@@ -331,10 +331,10 @@ const EPISODES = [
     ["Iceland Moss", "Sudan Archives", "Athena"],
     ["DEAD", "Sudan Archives", "The BPM"],
     ["SHE'S GOT PAIN", "Sudan Archives", "The BPM"],
-    ["Sunburn", "Dominic Fike", "Sunburn (2023)", "Jim-E Stack"],
-    ["4x4", "Dominic Fike", "Sunburn (2023)", "Jim-E Stack"],
+    ["Sunburn", "Dominic Fike", "Sunburn", "Jim-E Stack"],
+    ["4x4", "Dominic Fike", "Sunburn", "Jim-E Stack"],
     ["3 Nights", "Dominic Fike", "Don't Forget About Me, Demos"],
-    ["Pangea", "Dominic Fike", "How to Quit Smoking (2025)", "Jim-E Stack"],
+    ["Pangea", "Dominic Fike", "How to Quit Smoking", "Jim-E Stack"],
     ["Note to Self", "Jim-E Stack", "EPHEMERA", "Empress Of"]
   ] },
   { id: 12, artist: "KAYTRANADA", date: "",
