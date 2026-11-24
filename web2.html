@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&family=Palanquin:wght@400;500;600&family=Trirong:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"><link rel="stylesheet" href="style.css"><title>The web | &amp;friends</title></head><body><header><a class="logo" href="index.html">&amp;friends</a><a class="nav" href="index.html">Episodes</a><a class="nav" href="web.html" aria-current="page">The web</a></header><main style="max-width:75rem"><h1>The web</h1><p class="lede">Black rectangles are the artists with their own episode. Outlined squares appear in more than one episode, so they are the bridges. Small grey squares appear once. Drag, hover, or click a shape.</p><div class="tools"><input id="q" type="search" placeholder="Find an artist" aria-label="Find an artist" list="names"><datalist id="names"></datalist></div><svg id="web" role="img" aria-label="Network of artists and their collaborations"></svg><div id="panel"><p>Click a shape to see which episodes and songs connect it.</p></div></main><script src="d3.min.js"></script><script src="data.js"></script><script src="common.js"></script><script>
+const nodes=new Map(),pairs=new Map();
+const node=n=>{if(!nodes.has(n))nodes.set(n,{id:n,name:n,ep:null,eps:new Set(),tracks:[]});return nodes.get(n)};
+const addLink=(a,b,w,primary)=>{if(a===b)return;const k=[a,b].sort().join("|");let l=pairs.get(k);if(!l){l={source:a,target:b,primary:false};pairs.set(k,l)}l.primary=l.primary||primary};
+EPISODES.forEach(e=>{const f=canon(e.artist);node(f).ep=e;node(f).eps.add(e.id);
+ e.tracks.forEach(t=>{const ps=trackPeople(t);
+  ps.forEach(p=>{const n=node(p);n.eps.add(e.id);n.tracks.push({t:t[0],ep:e})});
+  ps.forEach(p=>addLink(f,p,t[0],true));
+  ps.forEach((p,i)=>ps.slice(i+1).forEach(q=>{if(p!==f&&q!==f)addLink(p,q,t[0],false)}));})});
+const N=[...nodes.values()],links=[...pairs.values()];
+// Wait for the fonts so the episode rectangles can be sized to fit each name.
+Promise.all([document.fonts.load('600 13px Palanquin'),document.fonts.load('400 11px Palanquin')]).catch(()=>{}).then(()=>{
+const col=d=>d.ep?"#000":d.eps.size>1?"#fff":"#b5b5b5", lab=d=>d.ep||d.eps.size>1;
+const svg=d3.select("#web"),W=svg.node().clientWidth,H=svg.node().clientHeight;svg.attr("viewBox",[0,0,W,H]);
+// Size of every shape: episodes are rectangles sized to their name; everyone else is a square (bigger = in more episodes).
+const meas=svg.append("text").attr("font-family","Palanquin,system-ui,sans-serif").attr("font-weight",600).attr("font-size",13).style("visibility","hidden");
+N.forEach(d=>{if(d.ep){meas.text(d.name);d.w=Math.ceil(meas.node().getComputedTextLength())+26;d.h=28}else{d.w=d.h=(3.5+Math.min(d.eps.size,4)*2)*1.7}});
+meas.remove();
+// Angular connectors: horizontal, vertical, horizontal (right-angle elbows) instead of straight diagonals.
+const elbow=l=>{const mx=(l.source.x+l.target.x)/2;return `M${l.source.x},${l.source.y}H${mx}V${l.target.y}H${l.target.x}`};
+const L=svg.append("g").selectAll("path").data(links).join("path").attr("fill","none").attr("stroke","#000").attr("stroke-opacity",d=>d.primary?.35:.12);
+const G=svg.append("g").selectAll("g").data(N).join("g").style("cursor","pointer");
+G.append("rect").attr("x",d=>-d.w/2).attr("y",d=>-d.h/2).attr("width",d=>d.w).attr("height",d=>d.h).attr("fill",col).attr("stroke",d=>d.ep||d.eps.size>1?"#000":"none").attr("stroke-width",1.5);
+G.append("text").text(d=>d.name).attr("dy",d=>d.ep?"0.35em":-d.h/2-5).attr("text-anchor","middle").attr("fill",d=>d.ep?"#fff":"#000").attr("font-family","Palanquin,system-ui,sans-serif").attr("font-weight",d=>d.ep?600:400).attr("font-size",d=>d.ep?13:11).attr("opacity",d=>lab(d)?1:0).style("pointer-events","none").attr("paint-order","stroke").attr("stroke",d=>d.ep?"none":"#fff").attr("stroke-width",3);
+// Rectangles push each other apart by their real size (so wide name boxes never overlap).
+function rectCollide(pad){let ns;function force(){for(let i=0;i<ns.length;i++){const a=ns[i];for(let j=i+1;j<ns.length;j++){const b=ns[j];
+ const dx=b.x-a.x,dy=b.y-a.y,ox=(a.w+b.w)/2+pad-Math.abs(dx),oy=(a.h+b.h)/2+pad-Math.abs(dy);
+ if(ox>0&&oy>0){if(ox<oy){const k=(dx<0?-1:1)*ox*.4;a.vx-=k;b.vx+=k}else{const k=(dy<0?-1:1)*oy*.4;a.vy-=k;b.vy+=k}}}}}
+ force.initialize=n=>ns=n;return force}
+/* Layout knobs: link distance (48 + half the box) = how far collaborators sit from their artist; charge (-125) = how much shapes repel;
+   forceX/forceY strength = pull toward the middle (raise to bring everything closer together). */
+const sim=d3.forceSimulation(N).force("link",d3.forceLink(links).id(d=>d.id).distance(d=>d.primary?48+Math.max(d.source.w,d.target.w)/2:30).strength(d=>d.primary?.4:.08)).force("charge",d3.forceManyBody().strength(-125).distanceMax(330)).force("x",d3.forceX(W/2).strength(.034)).force("y",d3.forceY(H/2).strength(.055)).force("collide",rectCollide(11)).on("tick",()=>{
+ N.forEach(d=>{d.x=Math.max(d.w/2+10,Math.min(W-d.w/2-10,d.x));d.y=Math.max(d.h/2+10,Math.min(H-d.h/2-10,d.y))});
+ L.attr("d",elbow);
+ G.attr("transform",d=>`translate(${d.x},${d.y})`)});
+G.call(d3.drag().on("start",(ev,d)=>{if(!ev.active)sim.alphaTarget(.3).restart();d.fx=d.x;d.fy=d.y}).on("drag",(ev,d)=>{d.fx=ev.x;d.fy=ev.y}).on("end",(ev,d)=>{if(!ev.active)sim.alphaTarget(0);d.fx=null;d.fy=null}));
+const nb=d=>new Set(links.filter(l=>l.source.id===d.id||l.target.id===d.id).flatMap(l=>[l.source.id,l.target.id]));
+const hi=d=>{const s=nb(d);s.add(d.id);G.attr("opacity",x=>s.has(x.id)?1:.12);G.select("text").attr("opacity",x=>s.has(x.id)?1:0);L.attr("stroke",l=>l.source.id===d.id||l.target.id===d.id?"#000":"#000").attr("stroke-opacity",l=>l.source.id===d.id||l.target.id===d.id?.9:.05)};
+const lo=()=>{G.attr("opacity",1);G.select("text").attr("opacity",x=>lab(x)?1:0);L.attr("stroke","#000").attr("stroke-opacity",l=>l.primary?.35:.12)};
+const eplink=e=>`<a href="episode.html?id=${e.id}" >${pad(e.id)} ${e.artist}</a>`;
+function select(d){hi(d);const eps=EPISODES.filter(e=>d.eps.has(e.id));
+ document.getElementById("panel").innerHTML=`<h2>${d.name}</h2><p>${d.ep?"Has their own episode: "+eplink(d.ep)+". ":""}${d.ep&&eps.length>1||!d.ep?"Appears in: "+eps.map(eplink).join(", "):""}</p><div class="list">${d.tracks.slice(0,40).map(t=>`<p>${t.t} <span class="hint">(ep ${t.ep.id})</span></p>`).join("")}</div>`}
+G.on("mouseover",(ev,d)=>hi(d)).on("mouseout",lo).on("click",(ev,d)=>select(d));
+document.getElementById("names").innerHTML=N.map(d=>`<option value="${d.name}">`).join("");
+document.getElementById("q").addEventListener("change",ev=>{const v=ev.target.value.toLowerCase();const d=N.find(x=>x.name.toLowerCase()===v)||N.find(x=>x.name.toLowerCase().includes(v));if(d)select(d)});
+const h=decodeURIComponent(location.hash.slice(1));if(h&&nodes.has(h))setTimeout(()=>select(nodes.get(h)),600);
+});
+</script></body></html>
