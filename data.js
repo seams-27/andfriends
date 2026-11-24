@@ -19,7 +19,7 @@ const SHOW = {
 // and the web will treat them as one dot.
 const ALIASES = {
   "a.g. cook":"AG Cook","a. g. cook":"AG Cook","ag cook":"AG Cook","charli xcx":"Charli XCX","fka twigs":"FKA twigs",
-  "rosalia":"Rosalía","rosalía":"Rosalía","halyley williams":"Hayley Williams","daniell haim":"Danielle Haim",
+  "rosalia":"Rosalía","rosalía":"Rosalía","halyley williams":"Hayley Williams","daniell haim":"HAIM",
   "haim":"HAIM","sophie":"SOPHIE","pinkpantheress":"PinkPantheress","mc pânico":"MC Pânico","mc panico":"MC Pânico",
   "Kaytranada":"KAYTRANADA", "kaytranada":"KAYTRANADA", "this is lorelei":"This Is Lorelei","Nate Amos":"This Is Lorelei",
 };
