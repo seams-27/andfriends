@@ -16,7 +16,8 @@ const SHOW = { name: "&friends", host: "Spencer", station: "Radio Arcadia" };
 const ALIASES = {
   "a.g. cook":"AG Cook","a. g. cook":"AG Cook","ag cook":"AG Cook","charli xcx":"Charli XCX","fka twigs":"FKA twigs",
   "rosalia":"Rosalía","rosalía":"Rosalía","halyley williams":"Hayley Williams","daniell haim":"Danielle Haim",
-  "haim":"HAIM","sophie":"SOPHIE","pinkpantheress":"PinkPantheress","mc pânico":"MC Pânico","mc panico":"MC Pânico"
+  "haim":"HAIM","sophie":"SOPHIE","pinkpantheress":"PinkPantheress","mc pânico":"MC Pânico","mc panico":"MC Pânico",
+  "Kaytranada":"KAYTRANADA", "kaytranada":"KAYTRANADA",
 };
 
 const EPISODES = [
