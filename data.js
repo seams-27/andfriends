@@ -19,7 +19,7 @@ const SHOW = {
 // and the web will treat them as one dot.
 const ALIASES = {
   "a.g. cook":"AG Cook","a. g. cook":"AG Cook","ag cook":"AG Cook","charli xcx":"Charli XCX","fka twigs":"FKA twigs",
-  "rosalia":"Rosalía","rosalía":"Rosalía","halyley williams":"Hayley Williams","daniell haim":"HAIM",
+  "rosalia":"Rosalía","rosalía":"Rosalía","halyley williams":"Hayley Williams",
   "haim":"HAIM","sophie":"SOPHIE","pinkpantheress":"PinkPantheress","mc pânico":"MC Pânico","mc panico":"MC Pânico",
   "Kaytranada":"KAYTRANADA", "kaytranada":"KAYTRANADA", "this is lorelei":"This Is Lorelei","Nate Amos":"This Is Lorelei",
 };
@@ -329,7 +329,7 @@ const EPISODES = [
     ["Man of the Year", "Lorde", "Virgin", "Jim-E Stack"],
     ["Supercut", "Lorde", "Melodrama"],
     ["Jeanie", "Jim-E Stack", "EPHEMERA", "Bon Iver"],
-    ["If Only I Could Wait", "Bon Iver", "SABLE, fABLE", "Jim-E Stack; Daniell Haim"],
+    ["If Only I Could Wait", "Bon Iver", "SABLE, fABLE", "Jim-E Stack; HAIM"],
     ["Wash", "Bon Iver", "Bon Iver, Bon Iver"],
     ["Au Revoir", "Bon Iver", "SABLE, fABLE"],
     ["Milk Me", "Sudan Archives", "Natural Brown Prom Queen", "Jim-E Stack"],
